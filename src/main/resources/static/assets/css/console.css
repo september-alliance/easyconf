@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+label .error{
+	color:red;
+}
+.login-body{margin-top:10%;}

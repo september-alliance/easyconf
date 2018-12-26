@@ -1,0 +1,52 @@
+<span th:replace="./inc/head.html" ></span>
+<div class="modal-content">
+	<div class="modal-body">
+		<form id="form" class="form-horizontal">
+			<input type="hidden"  th:value="${user.id}" name="id" id="id"/>
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right">账号：</span>
+				<div class="col-sm-9">
+					<input type="text"  readonly th:value="${user.username}" class="col-xs-10 col-sm-5" />
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right"><span class="red">*</span>姓名：</span>
+				<div class="col-sm-9">
+					<input type="text" desc="姓名" name="fullname"  th:value="${user.fullname}"  class="col-xs-10 col-sm-5" />
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right"><span class="red">*</span>邮箱：</span>
+				<div class="col-sm-9">
+					<input type="text" name="email"  th:value="${user.email}"  class="col-xs-10 col-sm-5" />
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right">用户类型：</span>
+				<span th:if="${user.isAdmin==1}" >系统管理员</span>
+				<span th:if="${user.isAdmin==0}" >普通用户</span>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button"  onclick="doUpdate()" class="btn btn-primary">
+			保存</button>
+	</div>
+</div>
+<span th:replace="./inc/footer.html" ></span>
+<script type="text/javascript">
+
+function doUpdate(){
+	// todo,输入检查
+	var data = $('#form').serialize();
+	sajax({
+		type : "POST",
+		url : "/userProfile/doUpdateProfile",
+		data : data,
+		dataType : 'json',
+		success : function(data) {
+			layer.msg('保存成功');
+		}
+	});
+}
+</script>

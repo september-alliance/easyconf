@@ -1,0 +1,137 @@
+<span th:replace="./inc/head.html" ></span>
+<style type="text/css">
+.error{color:red;}
+.warn{color:brown;}
+.info{color:green;}
+.debug{color:blue;}
+</style>
+<body>
+	<span th:replace="./inc/top.html" ></span>
+	<div class="main-container" id="main-container">
+		<div class="main-container-inner">
+			<span th:replace="./inc/siderbar.html" ></span>
+			<div class="main-content">
+				<div class="search">
+					<div class="form-group">
+						<div class="col-sm-6">
+							<span class="control-label search-label">过滤：</span> <input
+								type="text" id="filter" placeholder="" class="col-xs-10" />
+						</div>
+					</div>
+					<button class="btn btn-xs btn-info" onclick="doSearch()">搜索</button>
+				</div>
+				<div class="page-content">
+					<br />
+					<div class="row col-xs-12">
+						<table id="sample-table-1"
+							class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th class="name">name</th>
+								    <th>level</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr style="display: none;" class="node_row">
+									<td class="">$[name]</td>
+								    <td script="true">buildLevel('$[name]' , '$[level]')</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- /row -->
+					<div class="row">
+						<div class="col-xs-12">
+							<div>
+								<ul class="pagination" id="pagination"></ul>
+							</div>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.page-content -->
+			</div>
+			<!-- /.main-content -->
+		</div>
+		<!-- /.main-container-inner -->
+
+<select onchange="setLogger(this)" style="display:none;" id="levelTemplate">
+		<option class="debug" value="debug">debug</option>
+		<option class="info" value="info">info</option>
+		<option class="warn" value="warn">warn</option>
+		<option class="error" value="error">error</option>
+ </select>
+ 
+	</div>
+	<!-- /.main-container -->
+
+	<span th:replace="./inc/footer.html" ></span>
+
+	<script type="text/javascript">
+		var pager;
+		var currentPage=1;
+		$(function() {
+			listData(1);
+		});
+
+		function doSearch() {
+			pager = null;
+			listData(1);
+		}
+
+		function doSearchCurrentPage(){
+			listData(currentPage);
+		}
+		
+		function buildLevel(name,level){
+			if(level=='DEBUG'){
+				console.log(name);
+			}
+			level = level.toLowerCase();
+			var tp = $('#levelTemplate');
+			var temp = $(tp[0].outerHTML);
+			temp.attr('name' ,name);
+			temp.removeAttr('id');
+			temp.addClass(level);
+			temp.show();
+			temp.find('option[value='+level+']').attr('selected' , true);
+			return temp[0].outerHTML;
+		}
+		
+		function listData(currentPage) {
+			var filter = $('#filter').val();
+			sajax({
+				type : "POST",
+				url : '/logger/listLoggerData',
+				data : {
+					filter : filter
+				},
+				dataType : 'json',
+				success : function(data) {
+					buildHtmlWithJsonArray('node_row', data,false, false);
+				}
+			});
+		}
+		
+		function setLogger(sel) {
+			var name = $(sel).attr('name');
+			var level = $(sel).val();
+			sajax({
+				type : "POST",
+				url : '/logger/doUpdateLogger',
+				data : {
+					name : name,
+					level : level
+				},
+				dataType : 'json',
+				success : function(result) {
+					layer.msg('设置成功');
+				}
+			});
+		}
+	</script>
+</body>
+</html>
+

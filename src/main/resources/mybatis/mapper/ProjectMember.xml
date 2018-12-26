@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProjectMember">
+
+	<select id="listProjectMemberData" parameterType="paramMap" resultType="Map">
+		select pm.id, u.username , u.fullname  from config_user u ,project_member pm where pm.uid = u.id
+		and pm.project_id=#{projectId}
+		order by pm.id desc
+	</select>
+	
+	<delete id="deleteMembers" parameterType="paramMap">
+		delete from project_member where project_id = #{projectId}
+	</delete>
+</mapper>

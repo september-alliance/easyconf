@@ -1,0 +1,97 @@
+<span th:replace="./inc/head.html" ></span>
+<div class="modal-content">
+	<div class="modal-body">
+		<form id="form" class="form-horizontal">
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right"><span class="red">*</span>任务名称：</span>
+				<div class="col-sm-9">
+					<input type="text" desc="任务名称" name="taskName" id="taskName" class="col-xs-10 col-sm-5" />
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right">备注：</span>
+				<div class="col-sm-9">
+					<input type="text" desc="备注" name="comment" id="comment" class="col-xs-10 col-sm-5" />
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right"><span class="red">*</span>接口url：</span>
+				<div class="col-sm-9">
+					<input type="text" desc="接口url" name="url" id="url" class="col-xs-10 col-sm-5" />
+				</div>
+			</div>
+			<div class="form-group">
+                <span class="col-sm-3 control-label no-padding-right"><span class="red">*</span>计划执行时间：</span> 
+                <div class="col-sm-9">
+                    <input class="date-picker col-xs-10 col-sm-5" desc="计划执行时间" name="planExecuteTime" id="planExecuteTime" type="text" data-date-format="yyyy-mm-dd hh:ii:ss" />
+					<span class="input-group-addon add-on"  style="padding:5px 5px;width:0px;cursor: pointer;">
+						<i class="icon-calendar bigger-110"></i>
+					</span>
+                </div>
+            </div>
+            <div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right"><span class="red">*</span>计划执行频率：</span>
+				<div class="col-sm-7">
+					<input type="text" desc="计划执行频率" name="planExecuteFrequency" id="planExecuteFrequency" class="col-xs-10 col-sm-5" />
+					<select name="timeUnit" id="timeUnit" style="height:28px;">
+						<option value="1">秒</option>
+						<option value="2">分钟</option>
+						<option value="3">小时</option>
+						<option value="4">天</option>
+						<option value="5">月</option>
+					</select>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" id="item_submit" class="btn btn-primary">
+			保存</button>
+	</div>
+</div>
+<span th:replace="./inc/footer.html" ></span>
+<script type="text/javascript">
+
+	$(function(){
+	  	$(".date-picker").datetimepicker({
+	        autoclose: true,
+	        todayBtn: true,
+	    }).next().on(ace.click_event, function(){
+			$(this).prev().focus();
+		});
+	});
+
+	//提交
+	$("#item_submit").on("click", function(e) {
+		var taskName = $('#taskName').val();
+		var comment = $('#comment').val();
+		var url = $('#url').val();
+		var platform = $('#platform').val();
+		var planExecuteTime = $('#planExecuteTime').val();
+		var planExecuteFrequency = $('#planExecuteFrequency').val();
+		var timeUnit = $('#timeUnit option:selected').val();
+		var r = /^\+?[1-9][0-9]*$/;　　//正整数
+		if(planExecuteFrequency && !r.test(planExecuteFrequency)){
+			showErrorMsg('planExecuteFrequency','positive_integer');
+			return;
+		}
+		sajax({
+			type : "POST",
+			url : "/task/doAddTask",
+			data : {
+				taskName : taskName,
+				comment : comment,
+				platform : platform,
+				url : url,
+				planExecuteTime : planExecuteTime,
+				planExecuteFrequency : planExecuteFrequency,
+				timeUnit : timeUnit
+			},
+			dataType : 'json',
+			success : function(data) {
+				layer.msg('保存成功');
+				closeWindowAndRefreshParentCurrentPage();
+			}
+		});
+	});
+</script>

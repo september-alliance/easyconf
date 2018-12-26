@@ -1,0 +1,51 @@
+<span th:replace="./inc/head.html" ></span>
+<div class="modal-content">
+	<div class="modal-body">
+		<form id="form" class="form-horizontal">
+			<input type="hidden"  th:value="${envType.id}" name="id" id="id"/>
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right"><span class="red">*</span>环境类型名称：</span>
+				<div class="col-sm-9">
+					<input type="text" desc="环境类型名称" name="name"  th:value="${envType.name}"  class="col-xs-10 col-sm-5" />
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right"><span class="red">*</span>安全类型：</span>
+				<div class="col-sm-9">
+					<select name="publicFlag" class="col-xs-10 col-sm-5">
+							<option th:selected="${envType.publicFlag==1}" value="1">开放</option>
+							<option th:selected="${envType.publicFlag==0}" value="0">机密</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right"><span class="red">*</span>安全密码：</span>
+				<div class="col-sm-9">
+					<input type="text" desc="安全密码" name="secret"  th:value="${envType.secret}"  class="col-xs-10 col-sm-5" /><span>机密型必须设置安全密码</span>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button"  onclick="doUpdate()" class="btn btn-primary">
+			保存</button>
+	</div>
+</div>
+<span th:replace="./inc/footer.html" ></span>
+<script type="text/javascript">
+
+function doUpdate(){
+	// todo,输入检查
+	var data = $('#form').serialize();
+	sajax({
+		type : "POST",
+		url : "/envType/doUpdateEnvType",
+		data : data,
+		dataType : 'json',
+		success : function(data) {
+			layer.msg('保存成功');
+			closeWindowAndRefreshParentCurrentPage();
+		}
+	});
+}
+</script>

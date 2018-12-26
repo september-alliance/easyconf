@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Project">
+
+	<select id="listProjectData" parameterType="paramMap" resultType="Map">
+		select p.*, user.fullname as createUser from project p , project_member pm  , config_user user
+		where p.id = pm.project_id and p.uid = `user`.id 
+		and p.name like concat('%',#{name},'%' ) and pm.uid = #{createUid}
+		order by p.id desc
+	</select>
+</mapper>

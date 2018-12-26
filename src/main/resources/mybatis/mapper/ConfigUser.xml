@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ConfigUser">
+
+	<select id="listConfigUserData" parameterType="paramMap" resultType="Map">
+		select id, username , fullname, email,is_admin , create_time , last_login_time from config_user where username like concat('%',#{username},'%' ) or fullname like concat('%',#{username},'%' )
+		order by id desc
+	</select>
+	
+	<select id="listMemberUserData" parameterType="paramMap" resultType="Map">
+		select id, username , fullname from config_user where username like concat('',#{username},'%' ) or fullname like concat('',#{username},'%' )
+		order by id desc
+	</select>
+</mapper>

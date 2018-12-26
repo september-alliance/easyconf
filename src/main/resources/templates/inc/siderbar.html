@@ -1,0 +1,48 @@
+<script type="text/javascript">
+$(function(){
+	var path = window.location.pathname;
+// 	if(window.location.search){
+// 		path = path+ window.location.search;
+// 	}
+	var menu = $('.menu[href="'+path+'"]');
+	menu.addClass('active');
+	menu.parents('.level_1').addClass('open');
+	menu.parents('li').addClass('active');
+});
+</script>
+<a class="menu-toggler" id="menu-toggler" href="#"> <span
+	class="menu-text"></span>
+</a>
+<div class="sidebar" id="sidebar">
+	<ul class="nav nav-list">
+		<li  class="level_1">
+			<a href="#" class="dropdown-toggle"> <i class="icon-desktop"></i>
+			 	<span class="menu-text">配置管理</span>  <b class="arrow icon-angle-down"></b>
+			</a>
+	        <ul class="submenu">
+	        	<li th:if="${session.sessionUser.isAdmin==1}"  >
+					<a  class="menu" href="/envType/envTypeList"> <i class="icon-double-angle-right"></i>环境类型</a>
+				</li>
+				<li>
+					<a  class="menu" href="/project/projectList"> <i class="icon-double-angle-right"></i>工程列表</a>
+				</li>
+				<li>
+					<a  class="menu" href="/config/configList"> <i class="icon-double-angle-right"></i>配置信息</a>
+				</li>
+			</ul>
+		</li>
+		
+		<li th:if="${session.sessionUser.isAdmin==1}"  class="level_1">
+			<a href="#" class="dropdown-toggle"> <i class="icon-user"></i>
+			 	<span class="menu-text">用户管理</span>  <b class="arrow icon-angle-down"></b>
+			</a>
+	        <ul class="submenu">
+				<li>
+					<a  class="menu" href="/user/userList"> <i class="icon-double-angle-right"></i>用户列表</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<!-- /.nav-list -->
+</div>
+

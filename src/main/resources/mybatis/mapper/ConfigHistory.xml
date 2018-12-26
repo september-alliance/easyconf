@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ConfigHistory">
+
+	<select id="listConfigHistoryData" parameterType="paramMap" resultType="Map">
+		select cfg.env_name,his.* from config_history his , config cfg where cfg.id = his.config_id
+		and his.config_id = #{configId}
+		order by his.id desc
+	</select>
+</mapper>

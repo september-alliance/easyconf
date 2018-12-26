@@ -1,0 +1,97 @@
+<span th:replace="./inc/head.html" ></span>
+<body class="login-layout">
+<div class="main-content login-body">
+				<div class="row">
+					<div class="col-sm-10 col-sm-offset-1">
+						<div class="login-container">
+							<div class="center">
+								<h1>
+									<span class="red">Easy Config 配置后台</span>
+								</h1>
+							</div>
+
+							<div class="space-6"></div>
+
+							<div class="position-relative">
+								<div id="login-box" class="login-box visible widget-box no-border">
+									<div class="widget-body">
+										<div class="widget-main">
+											<form id="commentForm" role="form" class="form-horizontal" method="post">
+												<fieldset>
+													<label class="block clearfix">
+													</label>
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input id="username" name="username" type="text" class="form-control" placeholder="用户名">
+															<i class="icon-user"></i>
+														</span>
+													</label>
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input id="password" name="password" type="password" class="form-control" placeholder="密码">
+															<i class="icon-lock"></i>
+														</span>
+													</label>
+
+													<div class="space"></div>
+
+													<div class="clearfix">
+														<button id="login_button" type="submit" class="width-35 pull-left btn btn-sm btn-primary">
+															<i class="icon-key"></i>
+															登录
+														</button>
+													</div>
+												</fieldset>
+											</form>
+										</div><!-- /widget-main -->
+									</div><!-- /widget-body -->
+								</div><!-- /login-box -->
+							</div><!-- /position-relative -->
+						</div>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div>
+<span th:replace="./inc/footer.html" ></span>
+<!-- inline scripts related to this page -->
+
+<script type="text/javascript">
+    jQuery(function($) {
+		$("#commentForm").validate({
+			rules: {
+				username: {
+					required: true
+				},
+				password: {
+					required: true
+				}
+			},
+			submitHandler: function(form) {
+				//通过之后回调 
+		       doSubmit();
+		       return false;
+	        }, 
+	        invalidHandler: function(form, validator) {  //不通过回调 
+		          return false; 
+	        }
+		});
+    });  
+    
+    function doSubmit(){
+      	var username = $("#username").val();
+       	var password = $("#password").val();
+		
+		sajax({
+            type: "POST",
+            url: '/doLogin',
+            data: {username: username, password: password},
+            dataType:'json',
+            success : function (data) {
+            	window.location.href = '/project/projectList';
+            }
+        });
+        
+    }
+</script>
+</body>
+</html>
+

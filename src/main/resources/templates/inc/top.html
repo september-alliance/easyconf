@@ -1,0 +1,70 @@
+<div class="navbar navbar-default" id="navbar">
+    <div class="navbar-container" id="navbar-container">
+        <div class="navbar-header pull-left">
+            <a href="index.jsp" class="navbar-brand">
+                <small>
+                	<img src="/assets/page/img/logo-24.png"/>
+						Easy Config
+                </small>
+            </a><!-- /.brand -->
+        </div>
+        <div class="navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+
+						<li class="">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<span class="user-info" style="line-height:34px;  width: 100px">
+									您好：<span  th:if="${session.sessionUser!=null}"  th:text="${session.sessionUser.username}"></span>
+									<span  th:if="${session.sessionUser==null}">匿名用户</span>
+								</span>
+
+								<i class="icon-caret-down"></i>
+							</a>
+
+							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<li th:if="${session.sessionUser!=null}">
+										<a href="#" onclick="openEditProfile()">
+											<i class="icon-user-md"></i>
+											个人信息
+										</a>
+										<a href="#" onclick="openResetPwd()">
+											<i class="icon-edit-sign"></i>
+											修改密码
+										</a>
+										<a href="/logout">
+											<i class="icon-off"></i>
+											退出
+										</a>
+								</li>
+								<li th:if="${session.sessionUser==null}">
+									<a href="/login">
+										<i class="icon-key"></i>
+										登录
+									</a>
+								</li>														
+							</ul>
+						</li>
+					</ul><!-- /.ace-nav -->
+				</div>
+    </div>
+</div>
+<script type="text/javascript">
+	function openResetPwd(){
+		layer.open({
+			  type: 2,
+			  title: '修改密码',
+			  shade: 0.5,
+			  area: ['450px', '400px'],
+			  content: '/userProfile/updatePwd'
+			});
+	}
+	function openEditProfile(){
+		layer.open({
+			  type: 2,
+			  title: '个人信息',
+			  shade: 0.5,
+			  area: ['50%', '400px'],
+			  content: '/userProfile/editProfile'
+			});
+	}
+</script>

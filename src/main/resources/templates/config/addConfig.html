@@ -1,0 +1,72 @@
+<span th:replace="./inc/head.html" ></span>
+<div class="modal-content">
+	<div class="modal-body">
+		<form id="form" class="form-horizontal">
+			<input type="hidden"  th:value="${project.id}" name="projectId" />
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right"><span class="red">*</span>工程名：</span>
+				<div class="col-sm-9">
+					<input type="text"  readonly="readonly"  th:value="${project.name}" class="col-xs-10 col-sm-5" />
+				</div>
+			</div>
+			<div class="form-group">
+                <span class="col-sm-3 control-label no-padding-right">环境类型：</span> 
+                <div class="col-sm-9">
+			    	<select name="envTypeId" class="col-xs-10 col-sm-5">
+							<option th:each="envType : ${envTypeList}"  th:value="${envType.id}"  th:text="${envType.name}"></option>
+					</select>
+                </div>
+             </div>
+               
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right"><span class="red">*</span>环境名：</span>
+				<div class="col-sm-9">
+					<input type="text" desc="环境名" name="envName"  class="col-xs-10 col-sm-5" />
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right"><span class="red">*</span>版本号：</span>
+				<div class="col-sm-9">
+					<input type="text"  name="version"  class="col-xs-10 col-sm-5" />
+				</div>
+			</div>
+			<div class="form-group">
+                <span class="col-sm-3 control-label no-padding-right">格式：</span> 
+                <div class="col-sm-9">
+			    	<select name="format" class="col-xs-10 col-sm-5">
+							<option value="properties">properties</option>
+							<option value="yaml">yaml</option>
+					</select>
+                </div>
+             </div>
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right">配置内容：</span>
+				<div class="col-sm-9">
+					<textarea desc="配置内容"  rows="30" name="content"  class="col-xs-10 col-sm-5" ></textarea>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" id="item_submit"   onclick="doSave()" class="btn btn-primary">
+			保存</button>
+	</div>
+</div>
+<span th:replace="./inc/footer.html" ></span>
+<script type="text/javascript">
+
+function doSave(){
+	// todo,输入检查
+	var data = $('#form').serialize();
+	sajax({
+		type : "POST",
+		url : "/config/doAddConfig",
+		data : data,
+		dataType : 'json',
+		success : function(data) {
+			layer.msg('添加成功，请到配置信息页面查看');
+			closeWindowAndRefreshParentCurrentPage();
+		}
+	});
+}
+</script>

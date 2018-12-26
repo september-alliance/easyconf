@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <contextName>easyconf</contextName>
+    <!-- 控制台输出 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <Target>System.out</Target>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss}[%t]%-5p %c{36}.%M\(%L\) %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 文件输出 -->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./logs/easyconf-all.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                ./logs/%d{yyyy-MM,aux}/easyconf-all.%d.%i.gz
+            </FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1024MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss}[%t]%-5p %c{36}.%M\(%L\) %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--日志的异步输出配置-->
+    <appender name="ASYNCConsole" class="ch.qos.logback.classic.AsyncAppender">
+        <includeCallerData>true</includeCallerData>
+        <appender-ref ref="console"/>
+    </appender>
+    <appender name="ASYNCFile" class="ch.qos.logback.classic.AsyncAppender">
+        <includeCallerData>true</includeCallerData>
+        <appender-ref ref="file"/>
+    </appender>
+	
+    <root level="info">
+        <appender-ref ref="ASYNCConsole"/>
+        <appender-ref ref="ASYNCFile"/>
+    </root>
+	
+</configuration>

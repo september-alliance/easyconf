@@ -1,0 +1,53 @@
+<span th:replace="./inc/head.html" ></span>
+<div class="modal-content">
+	<div class="modal-body">
+		<form id="form" class="form-horizontal">
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right"><span class="red">*</span>工程名：</span>
+				<div class="col-sm-9">
+					<input type="text" desc="工程名" name="name"  class="col-xs-10 col-sm-5" />
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right">说明：</span>
+				<div class="col-sm-9">
+					<input type="text" desc="说明" name="remark"  class="col-xs-10 col-sm-5" />
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right">联系方式：</span>
+				<div class="col-sm-9">
+					<input type="text" desc="联系方式" name="contact"  class="col-xs-10 col-sm-5" />
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="col-sm-3 control-label no-padding-right">标签：</span>
+				<div class="col-sm-9">
+					<input type="text" desc="标签" name="label"  class="col-xs-10 col-sm-5" />
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" id="item_submit"   onclick="doSave()" class="btn btn-primary">
+			保存</button>
+	</div>
+</div>
+<span th:replace="./inc/footer.html" ></span>
+<script type="text/javascript">
+
+function doSave(){
+	// todo,输入检查
+	var data = $('#form').serialize();
+	sajax({
+		type : "POST",
+		url : "/project/doAddProject",
+		data : data,
+		dataType : 'json',
+		success : function(data) {
+			layer.msg('保存成功');
+			closeWindowAndRefreshParentCurrentPage();
+		}
+	});
+}
+</script>
