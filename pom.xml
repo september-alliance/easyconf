@@ -6,7 +6,7 @@
 
 	<groupId>org.september</groupId>
 	<artifactId>easyconf</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<packaging>jar</packaging>
 
 	<description>A Simple Config Center</description>
