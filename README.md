@@ -21,8 +21,9 @@ springboot项目集成
 
 
 # easyconf的部署
-release目录下下载对应的版本发布包，如easyconf-1.0.1.rar，解压。
-新建数据库，执行sql脚本easyconf-1.0.1-full.sql(如果是升级的化，需要依次执行每个版本的-upgrade.sql脚本)
+release目录下下载对应的版本发布包，如easyconf-1.0.1.zip，解压。
+
+新建一个数据库，执行sql脚本easyconf-1.0.1-full.sql(如果是升级的化，需要依次执行每个版本的-upgrade.sql脚本)
 
 修改config/application.properties，注意修改数据库地址和发邮件的账号配置
 
@@ -37,4 +38,5 @@ spring.mail.password=yourpwd
 ```
 
 ./start.sh 启动
+
 tail -f logs/easyconf-all.log 查看日志
