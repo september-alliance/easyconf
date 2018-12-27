@@ -53,7 +53,7 @@ public class ConfigController {
 
 	@ResponseBody
 	@RequestMapping(value = "listConfigData")
-	public ResponseVo<Page<Config>> listTaskData(Page<Config> page, String projectName , String envName) {
+	public ResponseVo<Page<Config>> listConfigData(Page<Config> page, String projectName , String envName) {
 		SmartParamMap pm = new SmartParamMap();
 		pm.put("projectName", projectName);
 		pm.put("envName", envName);
