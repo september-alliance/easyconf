@@ -210,7 +210,7 @@ public class ConfigController {
 			}
 			//机密型
 			if(!StringUtils.equals(secret, envType.getSecret())) {
-				throw new BusinessException("secret not correct, please check again");
+				throw new BusinessException("secret not correct, please check again , do not contains #%? ");
 			}
 		}
 		
