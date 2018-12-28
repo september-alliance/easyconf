@@ -44,7 +44,7 @@ public class ProjectController extends BaseController{
 
 	@ResponseBody
 	@RequestMapping(value = "listProjectData")
-	public ResponseVo<Page<ProjectVo>> listTaskData(Page<ProjectVo> page, String name) {
+	public ResponseVo<Page<ProjectVo>> listProjectData(Page<ProjectVo> page, String name) {
 		SmartParamMap pm = new SmartParamMap();
 		if(1!=SessionHelper.getSessionUser(ConfigUser.class).getIsAdmin()) {
 			// 非管理员只能看自己的数据

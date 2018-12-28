@@ -24,6 +24,7 @@ public class ProjectService {
 	public void createProject(Project entity){
 		entity.setUid(SessionHelper.getSessionUser(ConfigUser.class).getId());
 		entity.setCreateTime(new Date());
+		commonDao.get(ConfigUser.class, entity.getUid());
 		commonDao.save(entity);
 		// and selt to member list
 		ProjectMember member = new ProjectMember();
