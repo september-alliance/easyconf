@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.september.smartdao.anno.AutoIncrease;
@@ -60,6 +59,8 @@ public class ConfigUser  implements UserDetails {
     /**  0: 初始化密码   1: 修改后密码*/
     @Column(name="is_revise")
     private Integer isRevise;
+    
+    private Boolean enabled;
 
 	public String getUsername() {
 		return username;
@@ -158,6 +159,14 @@ public class ConfigUser  implements UserDetails {
 
 	public void setIsAdmin(Integer isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 	
 }

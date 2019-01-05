@@ -6,7 +6,7 @@
 
 	<groupId>org.september</groupId>
 	<artifactId>easyconf</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<packaging>jar</packaging>
 
 	<description>A Simple Config Center</description>
@@ -33,13 +33,13 @@
 		<dependency>
 			<groupId>org.september</groupId>
 			<artifactId>alliance-smartdao</artifactId>
-			<version>2.1.1-SNAPSHOT</version>
+			<version>2.2.0.1</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.september</groupId>
 			<artifactId>alliance-simpleweb</artifactId>
-			<version>2.1.1-SNAPSHOT</version>
+			<version>2.2.0.1</version>
 		</dependency>
 		
 		<dependency>  
