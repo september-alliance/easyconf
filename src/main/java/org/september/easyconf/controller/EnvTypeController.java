@@ -1,8 +1,9 @@
 package org.september.easyconf.controller;
 
-import java.text.SimpleDateFormat;
+import javax.validation.Valid;
 
 import org.september.core.exception.BusinessException;
+import org.september.easyconf.entity.Config;
 import org.september.easyconf.entity.EnvType;
 import org.september.simpleweb.model.ResponseVo;
 import org.september.smartdao.CommonDao;
@@ -53,7 +54,7 @@ public class EnvTypeController {
 
 	@ResponseBody
 	@RequestMapping(value = "/doAddEnvType")
-	public ResponseVo<String> doAddEnvType(EnvType entity) {
+	public ResponseVo<String> doAddEnvType(@Valid EnvType entity) {
 		 if(commonValidator.exsits(EnvType.class, new String[]{"name"},new Object[]{entity.getName()})){
 			 throw new BusinessException("环境类型名称重复");
 		 }
@@ -68,16 +69,18 @@ public class EnvTypeController {
 	public ModelAndView editEnvType(Long id) {
 		ModelAndView mv = new ModelAndView();
 		EnvType po = commonDao.get(EnvType.class, id);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		mv.addObject("envType", po);
 		return mv;
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/doUpdateEnvType")
-	public ResponseVo<String> doUpdateEnvType(EnvType entity) {
+	public ResponseVo<String> doUpdateEnvType(@Valid EnvType entity) {
 		if(commonValidator.exsitsNotMe(EnvType.class, new String[]{"name"},new Object[]{entity.getName()} , entity.getId())){
 			 throw new BusinessException("环境类型名称重复");
+		 }
+		if(0==entity.getPublicFlag() && StringUtils.isEmpty(entity.getSecret())) {
+			 throw new BusinessException("机密型环境必须设置安全密码");
 		 }
 		commonDao.update(entity);
 		return ResponseVo.<String>BUILDER();
@@ -91,6 +94,13 @@ public class EnvTypeController {
 			throw new BusinessException("数据不存在或已删除");
 		}
 		//TODO 删除的限制条件
+		Config cfgVo = new Config();
+		cfgVo.setEnvTypeId(po.getId());
+		cfgVo.setDeleteFlag(0);
+		int total = commonDao.countByExample(cfgVo);
+		if(total>0) {
+			throw new BusinessException("请先删除环境类型"+po.getName()+"下的配置信息");
+		}
 		commonDao.delete(po);
 		return ResponseVo.<String>BUILDER().setCode(ResponseVo.BUSINESS_CODE.SUCCESS);
 	}

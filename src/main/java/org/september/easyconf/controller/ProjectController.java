@@ -50,6 +50,7 @@ public class ProjectController extends BaseController{
 			// 非管理员只能看自己的数据
 			pm.put("createUid", SessionHelper.getSessionUser(ConfigUser.class).getId());
 		}
+		pm.put("name", name);
 		page = commonDao.findPageByParams(ProjectVo.class, page, "Project.listProjectData", pm);
 		return ResponseVo.<Page<ProjectVo>>BUILDER().setData(page).setCode(ResponseVo.BUSINESS_CODE.SUCCESS);
 	}
