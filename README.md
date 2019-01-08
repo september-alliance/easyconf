@@ -13,5 +13,6 @@ admin
 https://www.jianshu.com/p/4cd068bb3cdc
 
 # Getting start with easyconf
-https://www.jianshu.com/p/69878459a24f
+https://www.jianshu.com/nb/33075799
+
 
