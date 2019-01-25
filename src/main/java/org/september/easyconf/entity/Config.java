@@ -55,6 +55,8 @@ public class Config{
 
     private transient String projectName;
     
+    private transient String secret;
+    
 	public String getProjectName() {
 		return projectName;
 	}
@@ -149,6 +151,14 @@ public class Config{
 
 	public void setVersion(String version) {
 		this.version = version;
+	}
+
+	public String getSecret() {
+		return secret;
+	}
+
+	public void setSecret(String secret) {
+		this.secret = secret;
 	}
 
 }

@@ -166,13 +166,13 @@ public class ConfigController {
 	
 	@PublicMethod
 	@ResponseBody
-	@RequestMapping(value = "/getConfig*/{project}/{env}/{version}")
+	@RequestMapping(value = "/getConfig*/{project}/{env}/{version}/*")
 	public String getConfig2(@PathVariable String project , @PathVariable String env , @PathVariable String version) throws Exception {
 		return getConfig(project , env , version , "");
 	}
 	@PublicMethod
 	@ResponseBody
-	@RequestMapping(value = "/getConfig*/{project}/{env}/{version}/{secret}")
+	@RequestMapping(value = "/getConfig*/{project}/{env}/{version}/{secret}/*")
 	public String getConfig(@PathVariable String project , @PathVariable String env , @PathVariable String version 
 			, @PathVariable String secret) throws Exception {
 		if(StringUtils.isEmpty(project)) {

@@ -44,9 +44,16 @@
 									<td><a href="javascript:void(0)" onclick="openEditConfig($[id])">$[version]</a></td>
 									<td>$[lastModifyTime]</td>
 									<td>
-										<a target="_blank" href="/config/getConfig.properties/$[projectName]/$[envName]/$[version]?.properties" >springboot</a>
-										&nbsp;&nbsp;
-										<a target="_blank" href="/config/getConfig/$[projectName]/$[envName]/$[version]" >spring非boot</a>
+										<span>
+											<cif test="'$[secret]'!=''">
+												<a target="_blank" href="/config/getConfig.properties/$[projectName]/$[envName]/$[version]/$[secret]/.properties" >查看</a>
+											</cif>
+										</span>
+										<span>
+											<cif test="'$[secret]'==''">
+												<a target="_blank" href="/config/getConfig.properties/$[projectName]/$[envName]/$[version]/.properties" >查看</a>
+											</cif>
+										</span>
 									</td>
 									<td>
 										<a href="/config/editContent?id=$[id]"  target="_blank">编辑</a>

@@ -3,7 +3,7 @@
 <mapper namespace="Config">
 
 	<select id="listConfigData" parameterType="paramMap" resultType="Map">
-		select et.name as envType ,cfg.*,p.name as projectName from env_type et right join config cfg on et.id = cfg.env_type_id
+		select et.name as envType ,et.secret ,cfg.*,p.name as projectName from env_type et right join config cfg on et.id = cfg.env_type_id
 		left join project p on cfg.project_id = p.id 
 		left join project_member pm on p.id = pm.project_id
 		where pm.uid = #{uid} and et.public_flag = #{publicFlag} and cfg.delete_flag = 0
